@@ -23,7 +23,7 @@ public class Sender  implements Runnable {
 					System.out.println("Broadcasting message: "+message);
 					ms.broadcast(message);	
 					Sequencer.queue.poll();
-				}	
+				}			
 				
 				Thread.sleep(10);
 			}

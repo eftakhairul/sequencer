@@ -55,9 +55,7 @@ public class Sequencer  implements Runnable {
 		
 			String data 	= null; 			
 			UDPServer us    = new UDPServer("localhost", this.sqnPort);
-			while(true) {		
-				
-				System.out.println("-----------Sequencer Resend Mgs Resquest Server:"+ this.sqnPort+"---------------");
+			while(true) {
 				data 				  = us.recieveRequest();
 				logFile("nak_server", "nak request details: "+ data);
 				System.out.println("nak request details: "+ data);
@@ -69,6 +67,8 @@ public class Sequencer  implements Runnable {
 					logFile("nak_server", "response to nak request: "+ db.get(requestParts[1]));
 					us.sendResponse(db.get(requestParts[1]));
 				}
+				
+				System.out.println("-----------Sequencer nak server:"+this.sqnPort+ " responsed---------------");
 			}
 		} catch (SocketException e) {
 			e.printStackTrace();
@@ -78,15 +78,15 @@ public class Sequencer  implements Runnable {
 	public static void main(String [] args) {
 		Thread receiverThread = new Thread(new Receiver());
 		receiverThread.start();
-		System.out.println("Sequencer Receive server is running.");
+		System.out.println("Sequencer Receive server is running At port: 2000");
 		
 		Thread senderThread = new Thread(new Sender());
 		senderThread.start();
-		System.out.println("Sequencer broadcast server is running.");
+		System.out.println("Sequencer broadcast server is running at port: 5000");
 		
 		Thread sequencerThread = new Thread(new Sequencer());
 		sequencerThread.start();
-		System.out.println("Sequencer message resend server is running.");
+		System.out.println("Sequencer message resend server is running at 10000");
 	}
 
 	
