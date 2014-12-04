@@ -1,11 +1,16 @@
 package sequencer;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.SocketException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
+
 import UDP.UDPServer;
 
 
@@ -17,6 +22,33 @@ public class Sequencer  implements Runnable {
 	public static int 	   seqeuenNum    = 1;
 	private int sqnPort                  = 10000;
 	
+	/*
+	 * logs the activities of servers
+	 * 
+	 * @return: void
+	 * 
+	 * @throws: SecurityException
+	 */
+	public static void logFile(String fileName, String Operation) throws SecurityException {
+		fileName = fileName + "_log.txt";
+		File log = new File(fileName);
+		try {
+			if (!log.exists()) {
+			}
+			log.setWritable(true);
+			FileWriter fileWriter = new FileWriter(log, true);
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			bufferedWriter.write(Operation);
+			bufferedWriter.newLine();
+			bufferedWriter.close();
+			
+		} catch (IOException e) {
+			System.out.println("COULD NOT LOG!!");
+		}
+	}
+	
+	
+	
 	@Override
 	public void run() { 
 		try {			
@@ -27,12 +59,14 @@ public class Sequencer  implements Runnable {
 				
 				System.out.println("-----------Sequencer Resend Mgs Resquest Server:"+ this.sqnPort+"---------------");
 				data 				  = us.recieveRequest();
-				System.out.println("Incoming request details: "+ data);
+				logFile("nak_server", "nak request details: "+ data);
+				System.out.println("nak request details: "+ data);
 				String[] requestParts = data.split(":");
 				
 			
 				if(db.get(requestParts[1]) != null){
-					System.out.println("Response to nak details: "+ db.get(requestParts[1]));
+					System.out.println("response to nak request: "+ db.get(requestParts[1]));
+					logFile("nak_server", "response to nak request: "+ db.get(requestParts[1]));
 					us.sendResponse(db.get(requestParts[1]));
 				}
 			}
