@@ -14,7 +14,7 @@ public class Sender  implements Runnable {
 			
 			
 			while(true) {	
-				UDPMulticastClient ms = new UDPMulticastClient("225.4.5.6", 5000);				
+				UDPMulticastClient ms = new UDPMulticastClient("225.4.5.6", 6000);				
 				synchronized (Sequencer.queue) {
 					message = Sequencer.queue.peek();
 		        }

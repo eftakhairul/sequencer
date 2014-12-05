@@ -12,7 +12,7 @@ public class Tester {
 		System.out.println("Testing message for broadcasting: " + request);
 		uc.sendOnly(request);		
 		
-		UDPMulticastServer umc   = new UDPMulticastServer("225.4.5.6", 5000);	  
+		UDPMulticastServer umc   = new UDPMulticastServer("225.4.5.6", 6000);	  
 		String broadcastMessage  = umc.recieve();
 		 
 		 System.out.println("Broadcast Message: " + broadcastMessage);

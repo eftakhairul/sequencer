@@ -83,7 +83,7 @@ public class Sequencer  implements Runnable {
 		
 		Thread senderThread = new Thread(new Sender());
 		senderThread.start();
-		System.out.println("Sequencer broadcast server is running at port: 5000");
+		System.out.println("Sequencer broadcast server is running at port: 6000");
 		
 		Thread sequencerThread = new Thread(new Sequencer());
 		sequencerThread.start();
